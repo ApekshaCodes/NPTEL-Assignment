@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Streaming Platform - View All Songs</title>
+	<style>
+	
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+		}
+		
+		header {
+			background-color: #333;
+			color: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+		}
+		
+		nav ul {
+			list-style: none;
+			display: flex;
+		}
+		
+		nav li {
+			margin-right: 1rem;
+		}
+		
+		nav a {
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		li {
+			border: 1px solid #ccc;
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+		 
+		nav li.active a {
+			
+			border-radius: 5px;
+		} 
+		
+		
+		/* Styles for the all songs section */
+		.all-songs {
+			margin: 50px auto;
+			width: 600px;
+			padding: 30px;
+			background-color: #f0f0f0;
+			border-radius: 5px;
+		}
+		
+		.all-songs h2 {
+			margin-top: 0;
+		}
+		
+		.song-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		
+		.song-list li {
+			display: flex;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+		
+		.song-list li img {
+			width: 80px;
+			height: 80px;
+			margin-right: 20px;
+			border-radius: 5px;
+			object-fit: cover;
+		}
+		
+		.song-list li div {
+			flex: 1;
+		}
+		
+		.song-list li h3 {
+			margin: 0;
+			font-size: 20px;
+		}
+		
+		.song-list li p {
+			margin: 0;
+			font-size: 16px;
+			
+		}
+		
+	
+	</style>
+
+</head>
+<body>
+	<header>
+		<h1>Music Streaming Platform</h1>
+		<nav>
+			<ul>
+				<li><a href="home.html">Home</a></li>
+				<li><a href = "search.html">Search </a> </li>
+				<li><a href="createplaylist.html">Create Playlist</a></li>
+				<li class="active"><a href="allsongs.html">View All Songs</a></li>
+				<li><a href="register.html">Register</a></li>
+				<li><a href="login.html">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section class="all-songs">
+			<h2>All Songs</h2>
+			<ul class="song-list">
+				<li>
+					<img src="song1.jpg" alt="Song 1">
+					<div>
+						<h3>Song 1</h3>
+						<p>Artist Name</p>
+					</div>
+				</li>
+				<li>
+					<img src="song2.jpg" alt="Song 2">
+					<div>
+						<h3>Song 2</h3>
+						<p>Artist Name</p>
+					</div>
+				</li>
+				<!-- Add more songs here -->
+			</ul>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; Music Streaming Platform 2023</p>
+	</footer>
+</body>
+</html>

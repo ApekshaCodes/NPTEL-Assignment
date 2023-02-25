@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Streaming Platform - Login</title>
+	<style> 
+
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+		}
+		
+		header {
+			background-color: #333;
+			color: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+		}
+		
+		nav ul {
+			list-style: none;
+			display: flex;
+		}
+		
+		nav li {
+			margin-right: 1rem;
+		}
+		
+		nav a {
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		li {
+			border: 1px solid #ccc;
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+		
+		
+		.login {
+			margin: 50px auto;
+			width: 400px;
+			padding: 30px;
+			background-color: #f0f0f0;
+			border-radius: 5px;
+		}
+		
+		.login h2 {
+			margin-top: 0;
+		}
+		
+		.login label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		
+		.login input[type="text"],
+		.login input[type="password"] {
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			width: 100%;
+			margin-bottom: 20px;
+			box-sizing: border-box;
+		}
+		
+		.login button[type="submit"] {
+			padding: 10px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+			width: 100%;
+		}
+		
+		.login button[type="submit"]:hover {
+			background-color: #444;
+		}
+		
+		.login p {
+			margin-top: 20px;
+		}
+		
+		.login p a {
+			color: #333;
+		}
+		
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Music Streaming Platform</h1>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('home') }}">Home</a></li>
+				<li><a href="{{ url_for('search') }}">Search </a> </li>
+				<li><a href="{{ url_for('createplaylist') }}">Create Playlist</a></li>
+				<li><a href="{{ url_for('allsongs') }}">View All Songs</a></li>
+				<li><a href="{{ url_for('register') }}">Register</a></li>
+				<li class="active"><a href="{{ url_for('login') }}">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section class="login">
+			<h2>Login to your Account</h2>
+			<form>
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required>
+				<button type="submit">Login</button>
+			</form>
+			<p>Don't have an account yet? <a href="{{ url_for('register') }}">Register here</a>.</p>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; Music Streaming Platform 2023</p>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search - Music Streaming Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav li {
+            margin-right: 1rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        main {
+            padding: 1rem;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+        
+        form {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            margin-right: 0.5rem;
+        }
+        
+        input[type="text"] {
+            flex-grow: 1;
+        }
+        
+        button[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        
+        #search-results {
+            margin-top: 1rem;
+        }
+        
+        h3 {
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        h4 {
+            margin-top: 0;
+        }
+        
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Music Streaming Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+				<li class="active"><a href = "search.html">Search </a> </li>
+				<li><a href="createplaylist.html">Create Playlist</a></li>
+				<li><a href="allsongs.html">View All Songs</a></li>
+				<li><a href="register.html">Register</a></li>
+				<li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Search</h2>
+        <form>
+            <label for="search-term">Search:</label>
+            <input type="text" id="search-term" name="search-term" placeholder="Search songs..." required>
+            <a href = "search-results.html">
+            <button type="submit">Search</button> </a>
+        </form>
+
+        <section id="search-results">
+            <h3>Search Results:</h3>
+            <ul>
+                <li>
+                    <h4>Song 1</h4>
+                    <p>Artist: Artist 1</p>
+                    <p>Album: Album 1</p>
+                    <button>Add to Playlist</button>
+                </li>
+                <li>
+                    <h4>Song 2</h4>
+                    <p>Artist: Artist 2</p>
+                    <p>Album: Album 2</p>
+                    <button>Add to Playlist</button>
+                </li>
+                <!-- Add more search results here -->
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
