@@ -1,10 +1,12 @@
-from flask import Flask, flash,redirect,url_for, render_template, request
+from flask import Flask, flash,redirect,url_for, render_template, request, send_file
 from flask_mail import Message, Mail
 from flask_mysqldb import MySQL
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for
 import hashlib
 import uuid
+import io
+from io import BytesIO
 import smtplib
 from email.mime.text import MIMEText
 import secrets
@@ -15,6 +17,7 @@ from wtforms import Form,StringField,TextAreaField,PasswordField,validators
 from passlib.hash import sha256_crypt
 from functools import wraps
 from itsdangerous import URLSafeTimedSerializer,SignatureExpired
+from mutagen.easyid3 import EasyID3
 import os
 from bs4 import BeautifulSoup
 import requests
@@ -50,7 +53,7 @@ mysql=MySQL(app)
 # Create a cursor object to interact with the database
 cursor = db.cursor()
 
-app.config['UPLOAD_FOLDER'] = 'upload_songs'
+UPLOAD_FOLDER = 'upload_songs'
 
 @app.route('/')
 def index():
@@ -73,44 +76,9 @@ def search():
     # Render the results to a template
     return render_template('search.html', results=results)
 
-@app.route('/login')
-def login():
-    return render_template("login.html")
-
-
-@app.route('/register')
-def register():
-    return render_template("register.html")
-
-@app.route('/create_playlist', methods=['GET', 'POST'])
-def create_playlist():
-    if request.method == 'POST':
-        # Get the form data from the user
-        playlist_name = request.form['playlist_name']
-        playlist_desc = request.form['playlist_desc']
-        playlist_img = request.files['playlist_img']
-
-        # Save the image file to disk
-        img_path = f"img/{playlist_img.filename}"
-        playlist_img.save(img_path)
-
-        # Write a SQL query to insert the playlist into the database
-        sql = "INSERT INTO playlists (playlist_name, playlist_desc, playlist_img) VALUES (%s, %s, %s)"
-        val = (playlist_name, playlist_desc, img_path)
-
-        # Execute the SQL query to insert the playlist into the database
-        mycursor = db.cursor()
-        mycursor.execute(sql, val)
-        db.commit()
-
-        flash('Playlist Created Successfully!')
-
-        # Redirect to the same page to clear the form
-
-        return redirect(url_for('create_playlist'))
-    return render_template('create_playlist.html')
-
 UPLOAD_FOLDER = 'upload_songs'
+
+mp3file =''
 
 @app.route('/allsongs', methods=['GET', 'POST'])
 def allsongs():
@@ -157,8 +125,13 @@ def delete_song(song_id):
     flash('Song deleted successfully', 'success')
     return redirect(url_for('songs'))
 
-
-
+@app.route('/play_song/<int:song_id>', methods=['GET'])
+def play_song(song_id):
+    # Retrieve song from database
+    cursor = db.cursor()
+    cursor.execute("SELECT song_name, path FROM songs_list WHERE id = %s", (song_id,))
+    mp3data = cursor.fetchone()[1].encode('utf-8')
+    return send_file(io.BytesIO(mp3data), mimetype='audio/mpeg')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -134,12 +134,27 @@
 
 
 		  .view-allsongs-button :hover{
-			background-color: ##FFFF00;
+			background-color: #FFFF00;
 			cursor: pointer;
 		  }
 
 		  .view-allsongs-button i{
 			margin-right: 8px;
+		  }
+
+		  button.index{
+			position:absolute;
+			right:0;
+			background-color:#87CEEB;
+			font:bold;
+			padding: 16px;
+			border: none;
+			border-radius: 4px;
+			color: #fff;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+			font-size: 24px;
 		  }
 	
 	</style>
@@ -152,10 +167,8 @@
 			<ul>
 				<li><a href="{{ url_for('index') }}">Home</a></li>
 				<li><a href="{{ url_for('search') }}">Search </a> </li>
-				<li><a href="{{ url_for('create_playlist') }}">Create Playlist</a></li>
 				<li class="active"><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
-				<li><a href="{{ url_for('register') }}">Register</a></li>
-				<li> <a href="{{ url_for('login') }}">Login</a></li>
+			
 			</ul>
 		</nav>
 	</header>
@@ -204,6 +217,10 @@
 		</form>
 			</div>
 
+
+			<a href="{{ url_for('index') }}">    
+				<button type="Submit" class="index"> Back </button>
+			  </a>
 	</main>
 	<footer>
 		<p>&copy; Music Streaming Platform 2023</p>

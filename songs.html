@@ -43,7 +43,39 @@
 			border-radius: 5px;
 		} 
 		
+		button {
+			padding: 16px;
+			border: none;
+			border-radius: 4px;
+			color: #fff;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+			font-size: 24px;
+			background-color: #DC143C;
+		  
+		  }
 		
+
+		button.btn btn-danger{
+			background-color: #28a745;
+		} 
+
+		    
+  button.index {
+	position: absolute;
+ 	right:0;
+    background-color: #28a745;
+  }
+  
+  button.index:hover {
+    background-color: #218838;
+  }
+
+  button.btn-play{
+	background-color: #0000FF;
+  }
+  
 	
 	</style>
 </head>
@@ -54,10 +86,9 @@
 			<ul>
 				<li><a href="{{ url_for('index') }}">Home</a></li>
 				<li><a href="{{ url_for('search') }}">Search </a> </li>
-				<li><a href="{{ url_for('create_playlist') }}">Create Playlist</a></li>
+				
 				<li class="active"><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
-				<li><a href="{{ url_for('register') }}">Register</a></li>
-				<li> <a href="{{ url_for('login') }}">Login</a></li>
+				
 			</ul>
 		</nav>
 	</header>
@@ -68,8 +99,10 @@
         <th>ID</th>
         <th>Path</th>
         <th>Album</th>
-        <th>Artist</th>
         <th>Name</th>
+        <th>Artist</th>
+		<th> </th>
+		<th> </th>
       </tr>
     </thead>
     <tbody>
@@ -86,6 +119,13 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
+			<td>
+                <form action="{{ url_for('play_song', song_id=song[0]) }}" method="POST">
+                    <input type="hidden" name="_method" value="PLAY">
+                    <button type="submit" class="btn-play">Play</button>
+                </form>
+            </td>
+			
             </tr>
         {% endfor %}
     </tbody>
@@ -100,5 +140,10 @@
         </ul>
     {% endif %}
 {% endwith %}
+<br> <br>
+
+<a href="{{ url_for('allsongs') }}">    
+	<button type="Submit" class="index"> Back </button>
+  </a>
 </body>
 </html>

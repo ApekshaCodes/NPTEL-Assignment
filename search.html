@@ -128,12 +128,6 @@
   margin-left: auto;
 }
 
-/* No results message */
-.no-results {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #ff0000;
-}
 
 table {
     border-collapse: collapse;
@@ -165,28 +159,23 @@ table {
   
 
   button {
-    padding: 10px;
+    padding: 16px;
     border: none;
     border-radius: 4px;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    font-size: 24px;
+  
   }
   
-  button.add-to-playlist {
-    background-color: #007bff;
-  }
   
-  button.add-to-playlist:hover {
-    background-color: #0062cc;
-  }
-  
-  button.play {
+  button.index {
     background-color: #28a745;
   }
   
-  button.play:hover {
+  button.index:hover {
     background-color: #218838;
   }
   
@@ -199,10 +188,8 @@ table {
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
 				<li class="active"><a href="{{ url_for('search') }}">Search </a> </li>
-				<li><a href="{{ url_for('create_playlist') }}">Create Playlist</a></li>
 				<li><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
-				<li><a href="{{ url_for('register') }}">Register</a></li>
-				<li> <a href="{{ url_for('login') }}">Login</a></li>
+			
             </ul>
         </nav>
     </header>
@@ -232,19 +219,13 @@ table {
                 <td>{{ result[2] }}</td>
                 <td>{{ result[3] }}</td>
                 <td>{{ result[4] }}</td>
-                <td>
-                    <a href="#">
-                    <button class="add-to-playlist">Add to Playlist</button>
-                </a>
-                    <a href="#">
-                        <button class="play">Play</button>
-                    </a>
-                </td>
               </tr>
               {% endfor %}
-            </tbody>
           </table>
-          
+          <a href="{{ url_for('index') }}">
+      
+          <button type="Submit" class="index" align="right"> Back </button>
+        </a>
 </main>
 </body>
 </html>
