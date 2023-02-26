@@ -41,7 +41,7 @@ db = mysql.connector.connect(
 
 app.config.from_pyfile('config.cfg')
 mail=Mail(app)
-csrf = CSRFProtect(app)
+
 
 s=URLSafeTimedSerializer('secret123')
 
@@ -106,29 +106,9 @@ def create_playlist():
         flash('Playlist Created Successfully!')
 
         # Redirect to the same page to clear the form
+
         return redirect(url_for('create_playlist'))
-
-    # Retrieve the existing playlists from the database
-    mycursor = db.cursor(dictionary=True)
-    mycursor.execute("SELECT * FROM playlists")
-    playlists = mycursor.fetchall()
-    
-   # Render the create playlist form with the existing playlists
-    return render_template('create_playlist.html', playlists=playlists)
-
-@app.route('/delete/<playlist>', methods=['POST'], endpoint='delete_playlist')
-def delete_playlist(playlist):
-    playlist_name = request.args.get('playlist_name')
-    cursor = db.cursor()
-    sql = "DELETE FROM playlists WHERE name = %s"
-    val = (playlist_name,)
-    cursor.execute(sql,val)
-    db.commit()
-    flash('Playlist deleted successfully', 'success')
-    url_for('delete_playlist', playlist_name=playlist_name)
-
-
- 
+    return render_template('create_playlist.html')
 
 UPLOAD_FOLDER = 'upload_songs'
 
@@ -178,7 +158,7 @@ def delete_song(song_id):
     return redirect(url_for('songs'))
 
 
-cursor.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
