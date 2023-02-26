@@ -1,30 +1,13 @@
-from flask import Flask, flash,redirect,url_for, render_template, request, send_file
-from flask_mail import Message, Mail
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file
+from flask_mail import Mail, Message
 from flask_mysqldb import MySQL
-import mysql.connector
-from flask import Flask, render_template, request, redirect, url_for
-import hashlib
-import uuid
-import io
-from io import BytesIO
-import smtplib
-from email.mime.text import MIMEText
-import secrets
-from flask import Flask,render_template,flash,redirect,url_for,session,logging,request
-from flask_mail import Mail,Message
-from flask_mysqldb import MySQL
-from wtforms import Form,StringField,TextAreaField,PasswordField,validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from functools import wraps
-from itsdangerous import URLSafeTimedSerializer,SignatureExpired
-from mutagen.easyid3 import EasyID3
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 import os
-from bs4 import BeautifulSoup
-import requests
-import sys
-from flask_wtf.csrf import CSRFProtect
-
-from itsdangerous import URLSafeTimedSerializer,SignatureExpired
+import io
+import mysql.connector
 
 app = Flask(__name__)
 name1=""
