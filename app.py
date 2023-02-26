@@ -19,6 +19,7 @@ import os
 from bs4 import BeautifulSoup
 import requests
 import sys
+from flask_wtf.csrf import CSRFProtect
 
 from itsdangerous import URLSafeTimedSerializer,SignatureExpired
 
@@ -40,6 +41,7 @@ db = mysql.connector.connect(
 
 app.config.from_pyfile('config.cfg')
 mail=Mail(app)
+csrf = CSRFProtect(app)
 
 s=URLSafeTimedSerializer('secret123')
 
@@ -56,7 +58,20 @@ def index():
 
 @app.route('/search')
 def search():
-    return render_template("search.html")
+    # Get the query parameter from the user
+    query = request.args.get('q')
+
+    # Write a SQL query to search for the song
+    sql = "SELECT * FROM songs_list WHERE img LIKE %s OR song_name LIKE %s OR album LIKE %s OR contributing_artist LIKE %s"
+    val = (f"%{query}%", f"%{query}%", f"%{query}%", f"%{query}%")
+
+    # Execute the SQL query and fetch the results
+    mycursor = db.cursor()
+    mycursor.execute(sql, val)
+    results = mycursor.fetchall()
+
+    # Render the results to a template
+    return render_template('search.html', results=results)
 
 @app.route('/login')
 def login():
@@ -67,13 +82,53 @@ def login():
 def register():
     return render_template("register.html")
 
+@app.route('/create_playlist', methods=['GET', 'POST'])
+def create_playlist():
+    if request.method == 'POST':
+        # Get the form data from the user
+        playlist_name = request.form['playlist_name']
+        playlist_desc = request.form['playlist_desc']
+        playlist_img = request.files['playlist_img']
+
+        # Save the image file to disk
+        img_path = f"img/{playlist_img.filename}"
+        playlist_img.save(img_path)
+
+        # Write a SQL query to insert the playlist into the database
+        sql = "INSERT INTO playlists (playlist_name, playlist_desc, playlist_img) VALUES (%s, %s, %s)"
+        val = (playlist_name, playlist_desc, img_path)
+
+        # Execute the SQL query to insert the playlist into the database
+        mycursor = db.cursor()
+        mycursor.execute(sql, val)
+        db.commit()
+
+        flash('Playlist Created Successfully!')
+
+        # Redirect to the same page to clear the form
+        return redirect(url_for('create_playlist'))
+
+    # Retrieve the existing playlists from the database
+    mycursor = db.cursor(dictionary=True)
+    mycursor.execute("SELECT * FROM playlists")
+    playlists = mycursor.fetchall()
+    
+   # Render the create playlist form with the existing playlists
+    return render_template('create_playlist.html', playlists=playlists)
+
+@app.route('/delete/<playlist>', methods=['POST'], endpoint='delete_playlist')
+def delete_playlist(playlist):
+    playlist_name = request.args.get('playlist_name')
+    cursor = db.cursor()
+    sql = "DELETE FROM playlists WHERE name = %s"
+    val = (playlist_name,)
+    cursor.execute(sql,val)
+    db.commit()
+    flash('Playlist deleted successfully', 'success')
+    url_for('delete_playlist', playlist_name=playlist_name)
 
 
-@app.route('/createplaylist')
-def createplaylist():
-    return render_template("createplaylist.html")
-
-
+ 
 
 UPLOAD_FOLDER = 'upload_songs'
 
@@ -121,6 +176,9 @@ def delete_song(song_id):
     db.commit()
     flash('Song deleted successfully', 'success')
     return redirect(url_for('songs'))
+
+
+cursor.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
