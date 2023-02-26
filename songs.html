@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Streaming Platform - View All Songs</title>
+	<style>
+	
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+		}
+		
+		header {
+			background-color: #333;
+			color: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+		}
+		
+		nav ul {
+			list-style: none;
+			display: flex;
+		}
+		
+		nav li {
+			margin-right: 1rem;
+		}
+		
+		nav a {
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		li {
+			border: 1px solid #ccc;
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+		 
+		nav li.active a {
+			
+			border-radius: 5px;
+		} 
+		
+		
+	
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Music Streaming Platform</h1>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('index') }}">Home</a></li>
+				<li><a href="{{ url_for('search') }}">Search </a> </li>
+				<li><a href="{{ url_for('createplaylist') }}">Create Playlist</a></li>
+				<li class="active"><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
+				<li><a href="{{ url_for('register') }}">Register</a></li>
+				<li> <a href="{{ url_for('login') }}">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+<br> <br>
+<table border="2">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Path</th>
+        <th>Album</th>
+        <th>Artist</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for song in songs %}
+            <tr>
+                <td>{{ song[0] }}</td>
+                <td>{{ song[1] }}</td>
+                <td>{{ song[2] }}</td>
+                <td>{{ song[3] }}</td>
+                <td>{{ song[4] }}</td>
+                <td>
+                <form action="{{ url_for('delete_song', song_id=song[0]) }}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashes">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+</body>
+</html>

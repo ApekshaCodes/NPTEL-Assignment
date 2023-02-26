@@ -97,12 +97,13 @@
 		<h1>Music Streaming Platform</h1>
 		<nav>
 			<ul>
-				<li><a href="{{ url_for('home') }}">Home</a></li>
+				<li><a href="{{ url_for('index') }}">Home</a></li>
 				<li><a href="{{ url_for('search') }}">Search </a> </li>
 				<li><a href="{{ url_for('createplaylist') }}">Create Playlist</a></li>
-				<li><a href="{{ url_for('allsongs') }}">View All Songs</a></li>
+				<li><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
 				<li><a href="{{ url_for('register') }}">Register</a></li>
-				<li class="active"><a href="{{ url_for('login') }}">Login</a></li>
+				<li class="active"> <a href="{{ url_for('login') }}">Login</a></li>
+				
 			</ul>
 		</nav>
 	</header>
@@ -116,7 +117,7 @@
 				<input type="password" id="password" name="password" required>
 				<button type="submit">Login</button>
 			</form>
-			<p>Don't have an account yet? <a href="{{ url_for('register') }}">Register here</a>.</p>
+			
 		</section>
 	</main>
 	<footer>

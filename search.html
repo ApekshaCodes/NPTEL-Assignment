@@ -99,12 +99,12 @@
         <h1>Music Streaming Platform</h1>
         <nav>
             <ul>
-                <li><a href="home.html">Home</a></li>
-				<li class="active"><a href = "search.html">Search </a> </li>
-				<li><a href="createplaylist.html">Create Playlist</a></li>
-				<li><a href="allsongs.html">View All Songs</a></li>
-				<li><a href="register.html">Register</a></li>
-				<li><a href="login.html">Login</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+				<li class="active"><a href="{{ url_for('search') }}">Search </a> </li>
+				<li><a href="{{ url_for('createplaylist') }}">Create Playlist</a></li>
+				<li><a href="{{ url_for('allsongs') }}"> Upload Songs</a></li>
+				<li><a href="{{ url_for('register') }}">Register</a></li>
+				<li> <a href="{{ url_for('login') }}">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -114,8 +114,6 @@
         <form>
             <label for="search-term">Search:</label>
             <input type="text" id="search-term" name="search-term" placeholder="Search songs..." required>
-            <a href = "search-results.html">
-            <button type="submit">Search</button> </a>
         </form>
 
         <section id="search-results">
