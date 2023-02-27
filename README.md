@@ -15,10 +15,34 @@ Features
 
 Installation
 
-1. Clone the repository to your local machine
-2. Install the dependencies: pip install -r requirements.txt
-4. Create a MySQL database : music_streaming
-6. Run the application : flask run
+1. Install python/pip:
+
+sudo apt-get update
+sudo apt-get install python3 python3-pip
+
+2. Clone the repository to your local machine
+
+3. Install the dependencies:
+
+pip install -r requirements.txt
+
+4. Setup the flask app environment :
+
+export FLASK_APP=app.py
+
+5. Create a MySQL database :
+
+music_streaming
+
+add the tables provided in this:
+
+songs
+
+songs_list
+
+6. Run the application :
+
+flask run
 
 Usage
 
