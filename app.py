@@ -9,25 +9,19 @@ import os
 import io
 import mysql.connector
 
+
 app = Flask(__name__)
-name1=""
-usernname1=""
-email1=""
-password1=""
-username2=""
-app.config['SECRET_KEY'] = 'secret21'
+
+app.secret_key = 'secret21'
 
 # Create a connection to the MySQL database
 db = mysql.connector.connect(
   host="localhost",
   user="root",
   password="root",
-  database="music_streaming"
+  database="music_streaming",
+
 )
-
-app.config.from_pyfile('config.cfg')
-mail=Mail(app)
-
 
 s=URLSafeTimedSerializer('secret123')
 
@@ -35,8 +29,6 @@ mysql=MySQL(app)
         
 # Create a cursor object to interact with the database
 cursor = db.cursor()
-
-UPLOAD_FOLDER = 'upload_songs'
 
 @app.route('/')
 def index():
@@ -48,8 +40,8 @@ def search():
     query = request.args.get('q')
 
     # Write a SQL query to search for the song
-    sql = "SELECT * FROM songs_list WHERE img LIKE %s OR song_name LIKE %s OR album LIKE %s OR contributing_artist LIKE %s"
-    val = (f"%{query}%", f"%{query}%", f"%{query}%", f"%{query}%")
+    sql = "SELECT * FROM songs_list WHERE song_name LIKE %s OR album LIKE %s OR contributing_artist LIKE %s"
+    val = (f"%{query}%", f"%{query}%", f"%{query}%")
 
     # Execute the SQL query and fetch the results
     mycursor = db.cursor()
@@ -59,9 +51,7 @@ def search():
     # Render the results to a template
     return render_template('search.html', results=results)
 
-UPLOAD_FOLDER = 'upload_songs'
-
-mp3file =''
+UPLOAD_FOLDER = 'static/music'
 
 @app.route('/allsongs', methods=['GET', 'POST'])
 def allsongs():
@@ -110,11 +100,17 @@ def delete_song(song_id):
 
 @app.route('/play_song/<int:song_id>', methods=['GET'])
 def play_song(song_id):
-    # Retrieve song from database
+    
     cursor = db.cursor()
     cursor.execute("SELECT song_name, path FROM songs_list WHERE id = %s", (song_id,))
-    mp3data = cursor.fetchone()[1].encode('utf-8')
-    return send_file(io.BytesIO(mp3data), mimetype='audio/mpeg')
+    song = cursor.fetchone()
+    
+    # Check if song is found in the database
+    if song is not None:
+        return render_template('play_song.html',song_name=song[0], src=url_for('static',filename=song[1][7:]))
+    else:
+        return "Song not found"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
