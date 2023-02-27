@@ -1,9 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file
-from flask_mail import Mail, Message
 from flask_mysqldb import MySQL
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
-from passlib.hash import sha256_crypt
-from functools import wraps
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 import os
 import io
